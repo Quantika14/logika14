@@ -3,34 +3,32 @@ import http.client, urllib.request, urllib.parse, urllib.error, requests
 from time import sleep
 from datetime import datetime
 
-interface = "wlp5s0mon"
+interface = "wlp5s0mon" #Insert your interface
 listbox=""
 root=""
 Find=""
 timeoflastprintout = datetime.now()
 timestamp = datetime.now()
 refresh_interval_seconds = 10
+ENDPOINT = ""
 
 clients = []
 def send(mac_dispo, AP):
 	#PARAMETROS
-	# chicle: identificador del chicle, mac_dispo: el mac del dispositivo, vendor: la marca del dispositivo, wifi_dispo: las wifi asociadas del clietne wifi, user_asoc: el cliente del chicle.
 	par = urllib.parse.urlencode({'chicle':'prueba','mac_dispo':mac_dispo,'vendor':'hello-kity','wifi_dispo':AP,'user_asoc':'MR'})
 	cabeceras = {"Content-type": "application/x-www-form-urlencoded","Accept": "text/plain"}
-	#abrir_conexion = httplib.HTTPConnection("vps225403.ovh.net:80")
-	abrir_conexion = http.client.HTTPConnection("51.255.43.51:80")
+	abrir_conexion = http.client.HTTPConnection(ENDPOINT)
 	abrir_conexion.request("POST", "/api/api.php", par, cabeceras)
 	respuesta = abrir_conexion.getresponse()
 	print("[info]" + respuesta.reason)
 	abrir_conexion.close()
 
 def get_dot11_mgmt(pkt):
-#Definicion de los tres tipos de management frames que mandan unicamente los clientes 
+	
 	f_types = (0, 2, 4)
 	macs_val = True
 	if pkt.haslayer(Dot11) and pkt.haslayer(Dot11ProbeReq):
-#Comprobamos que el frame sea de tipo management (type == 0) 
-#y que sea un frame de los que envian los clientes
+
 		if pkt.type == 0 and pkt.subtype in f_types:
 			if pkt.addr2 not in clients:
 				if pkt.info:
@@ -88,7 +86,8 @@ def get_dot11_mgmt(pkt):
 							listbox.insert("0", text)
 							listbox.insert("0", pretext)
 							listbox.update_idletasks()
-							#PETICION PARA MANDAR POR HTTP AL SERVIDOR
+							
+							#SENDING INFO
 							#send(pkt.addr2, pkt.info)                   
 					else:
 						pass
