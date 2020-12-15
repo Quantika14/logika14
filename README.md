@@ -19,15 +19,17 @@ You must first put your card in monitor mode.
 
 `airmon-ng start {interface}`
 
+Important, you must edit the variable "interface" (line 6) and put yours in the code of the logika14.py file
+
 `python3 interfaz.py`
 
 Finally, insert the vendor of the wifi client you want to search
 
 # Autor
 
-## Jorge Coronado (aka jorgewebsec)
-## Twitter: @jorgewebsec
-## LinkedIn: https://www.linkedin.com/in/jorge-coronado-quantika14/
+* Jorge Coronado (aka jorgewebsec)
+* Twitter: @jorgewebsec
+* LinkedIn: https://www.linkedin.com/in/jorge-coronado-quantika14/
 
 
 
